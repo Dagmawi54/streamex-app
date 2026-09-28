@@ -27,14 +27,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
+          cache: npm
 
       - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: Install Android SDK packages
-        run: |
-          yes | sdkmanager --licenses >/dev/null || true
-          sdkmanager "platforms;android-36" "build-tools;36.0.0"
+        uses: android-actions/setup-android@v4
+        with:
+          accept-android-sdk-licenses: true
+          log-accepted-android-sdk-licenses: false
+          packages: 'platform-tools platforms;android-36 build-tools;36.0.0'
 
       - name: Install JavaScript dependencies
         run: npm install
@@ -42,13 +42,18 @@ jobs:
       - name: Build web shell
         run: npm run build
 
-      - name: Sync Capacitor Android project
-        run: npx cap sync android
+      # The old checked-in Android scaffold was incomplete. Generate a clean
+      # Capacitor 8 Android project from the installed 8.5.2 packages instead.
+      - name: Generate Android project
+        run: |
+          rm -rf android
+          npx cap add android
+          npx cap sync android
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: '8.13'
+          gradle-version: '8.14.3'
 
       - name: Build debug APK
         run: gradle --no-daemon -p android assembleDebug

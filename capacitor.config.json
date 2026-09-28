@@ -4,5 +4,9 @@
   "webDir": "www",
   "android": {
     "allowMixedContent": false
+  },
+  "server": {
+    "url": "https://streamex.hn",
+    "cleartext": false
   }
 }
