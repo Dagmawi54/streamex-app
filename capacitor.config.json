@@ -1,0 +1,8 @@
+{
+  "appId": "com.streamex.app",
+  "appName": "StreameX",
+  "webDir": "www",
+  "android": {
+    "allowMixedContent": false
+  }
+}
