@@ -27,7 +27,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: npm
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v4
@@ -37,10 +36,14 @@ jobs:
           packages: 'platform-tools platforms;android-36 build-tools;36.0.0'
 
       - name: Install JavaScript dependencies
-        run: npm install
+        run: npm install --no-audit --no-fund
 
       - name: Build web shell
         run: npm run build
+
+      - name: Validate Capacitor dependencies
+        run: |
+          node -e "const p=require('./package.json'); if (p.dependencies['@capacitor/core'] !== '8.5.2' || p.dependencies['@capacitor/android'] !== '8.5.2' || p.devDependencies['@capacitor/cli'] !== '8.5.2') process.exit(1); console.log('Capacitor 8.5.2 dependencies OK')"
 
       # The old checked-in Android scaffold was incomplete. Generate a clean
       # Capacitor 8 Android project from the installed 8.5.2 packages instead.

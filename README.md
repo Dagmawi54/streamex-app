@@ -32,4 +32,4 @@ This repository includes `.github/workflows/build-android.yml`.
 6. Open the completed workflow run and download the **StreameX-debug-apk** artifact.
 7. Extract the artifact and install `app-debug.apk` on the Android phone.
 
-The GitHub runner installs Node.js, Java 21, Android API 36/build tools, and Gradle 8.13 automatically. No Android Studio or local Android SDK is required on your phone.
+The GitHub runner installs Node.js, Java 21, Android API 36/build tools, and Gradle 8.14.3 automatically. No Android Studio or local Android SDK is required on your phone.
